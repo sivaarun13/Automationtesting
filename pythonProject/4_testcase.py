@@ -1,0 +1,53 @@
+import time
+from selenium.webdriver.common.alert import Alert
+from maintestcase import user
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+
+from selenium.webdriver.common.by import By
+
+"""
+1. Launch browser
+2. Navigate to url 'http://automationexercise.com'
+3. Verify that home page is visible successfully
+4. Click on 'Signup / Login' button
+5. Verify 'Login to your account' is visible
+6. Enter correct email address and password
+7. Click 'login' button
+8. Verify that 'Logged in as username' is visible
+9. Click 'Logout' button
+10. Verify that user is navigated to login page
+"""
+
+class Testcase4(user):
+    def __init__(self):
+        driver = webdriver.Chrome()
+        super().__init__(driver)
+
+    def execute_testcase(self):
+        try:
+            """Initialize the browser"""
+            url = "http://automationexercise.com"
+            # self.driver = webdriver.Chrome()
+            self.driver.maximize_window()
+            self.driver.get(url)
+
+            """Testcase steps"""
+            self.validate_home_page_is_visible_successfully()
+            self.click_menu_items('Signup / Login')
+            self.enter_email("ADMIN131120@gmail.com", "login")
+            self.enter_password("domain")
+            self.submit_button('Login')
+            self.validate_logged_in_as_username('Domain')
+            self.click_menu_items('Logout')
+            self.verify_headline_is_displayed("Login to your account")
+
+        except Exception as exp:
+            print(f"Error during Test Execution:{exp}")
+
+        finally:
+            self.driver.quit()
+
+if __name__ == "__main__":
+    testcase = Testcase4()
+    testcase.execute_testcase()
